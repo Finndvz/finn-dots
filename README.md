@@ -1,6 +1,6 @@
 # 📦 Finndvz Dots
 
-> Forked from [caioax/lyne-dots](https://github.com/caioax/lyne-dots).
+> Forked from [caioax/lyne-dots]
 > Arch Linux dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/), featuring a Hyprland (Wayland) desktop environment with a custom QuickShell bar and a unified theme system that applies across the entire setup.
 
 ---
