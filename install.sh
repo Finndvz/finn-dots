@@ -360,10 +360,10 @@ setup_wallpaper() {
 }
 
 setup_migrations() {
-    log_header "Initializing Lyne CLI"
+    log_header "Initializing Finn CLI"
 
-    local MIGRATIONS_DIR="$DOTFILES_DIR/.data/lyne-cli/migrations"
-    local DONE_FILE="$HOME/.local/share/lyne/migrations-done"
+    local MIGRATIONS_DIR="$DOTFILES_DIR/.data/finn-cli/migrations"
+    local DONE_FILE="$HOME/.local/share/finn/migrations-done"
 
     mkdir -p "$(dirname "$DONE_FILE")"
     touch "$DONE_FILE"

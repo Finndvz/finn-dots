@@ -42,7 +42,7 @@
 - 📟 **Tmux** - Terminal multiplexer with seamless Neovim navigation (Smart Splits)
 - 🐱 **Kitty** - GPU-accelerated terminal with dynamic theme switching
 - ⚡ **Zsh** - Oh-My-Zsh with autosuggestions, syntax highlighting, vi-mode, and Powerlevel10k
-- 🔧 **Lyne CLI** - Built-in command-line tool for managing the dotfiles
+- 🔧 **Finn CLI** - Built-in command-line tool for managing the dotfiles
 
 ### 🎨 Theme System
 
@@ -70,7 +70,7 @@ No restarts required.
 | Nord             | Nord Light       |
 | Rose Pine        | Rose Pine Dawn   |
 
-**Material You mode** generates a color palette from your current wallpaper using [matugen](https://github.com/InioX/matugen), supporting both dark and light schemes. Enable it from Quick Settings or with `lyne theme auto`.
+**Material You mode** generates a color palette from your current wallpaper using [matugen](https://github.com/InioX/matugen), supporting both dark and light schemes. Enable it from Quick Settings or with `finn theme auto`.
 
 ---
 
@@ -116,14 +116,14 @@ See [.install/README.md](.install/README.md) for more details.
 
 ---
 
-## 🔧 Lyne CLI
+## 🔧 Finn CLI
 
-Lyne Dots includes a built-in CLI tool called `lyne` for managing the dotfiles. It is loaded automatically via `.zshrc`.
+Finn Dots includes a built-in CLI tool called `finn` for managing the dotfiles. It is loaded automatically via `.zshrc`.
 
 ### Usage
 
 ```
-lyne <command> [args...]
+finn <command> [args...]
 ```
 
 ### Commands
@@ -138,43 +138,43 @@ lyne <command> [args...]
 | `reload`  | Reload QuickShell                                   |
 | `help`    | Show available commands                             |
 
-Run `lyne <command> --help` for details and subcommands.
+Run `finn <command> --help` for details and subcommands.
 
 ### Examples
 
 ```bash
 # Show current theme info
-lyne theme
+finn theme
 
 # List all available themes (dark and light)
-lyne theme list
+finn theme list
 
 # Switch to a specific theme preset
-lyne theme set catppuccin-mocha
+finn theme set catppuccin-mocha
 
 # Switch to Material You auto mode (colors from wallpaper)
-lyne theme auto
+finn theme auto
 
 # Toggle between dark and light scheme
-lyne theme scheme light
+finn theme scheme light
 
 # Pull the latest changes and apply migrations
-lyne update
+finn update
 
 # Check the git status of the dotfiles
-lyne git status
+finn git status
 
 # Edit the QuickShell state configuration
-lyne state
+finn state
 
 # Sync state.json after a manual defaults.json update
-lyne state sync
+finn state sync
 
 # Check which migrations are pending
-lyne migrate list
+finn migrate list
 
 # Show help for a specific command
-lyne state --help
+finn state --help
 ```
 
 ---
@@ -185,8 +185,8 @@ lyne state --help
 
 | Keybind          | Action                 |
 | ---------------- | ---------------------- |
-| `Super + Return` | Terminal (Kitty)       |
-| `Super + D`      | File Manager (Dolphin) |
+| `Super + T`      | Terminal (Kitty)       |
+| `Super + E`      | File Manager (Dolphin) |
 | `Super + Z`      | Browser (Zen Browser)  |
 | `Super + Space`  | App Launcher           |
 
@@ -197,8 +197,7 @@ lyne state --help
 | `Super + Q`               | Kill window                     |
 | `Super + F`               | Fullscreen                      |
 | `Super + Shift + F`       | Fullscreen (pinned)             |
-| `Super + Shift + Space`   | Toggle floating                 |
-| `Super + Tab`             | Toggle split                    |
+| `Super + V`               | Toggle floating                 |
 | `Super + P`               | Pseudo tile                     |
 | `Super + H J K L`         | Move focus (left/down/up/right) |
 | `Super + Shift + H J K L` | Move window                     |
@@ -222,9 +221,9 @@ lyne state --help
 | ------------------- | ----------------- |
 | `Super + B`         | Wallpaper Picker  |
 | `Super + /`         | Keybinds Help     |
-| `Super + V`         | Clipboard History |
-| `Super + End`       | Power Menu        |
-| `Print`             | Screenshot        |
+| `Super + C`         | Clipboard History |
+| `Super + Delete`    | Power Menu        |
+| `Insert`            | Screenshot        |
 | `Super + = / -`     | Zoom in / out     |
 | `Super + Shift + R` | Reload QuickShell |
 
@@ -261,7 +260,7 @@ Each top-level directory is a [GNU Stow](https://www.gnu.org/software/stow/) pac
 | ----------------- | ------------------------------------------------- |
 | `.install/`       | Installation scripts and package lists            |
 | `.data/`          | Templates, default themes, and default wallpapers |
-| `.data/lyne-cli/` | CLI commands, libraries, and migrations           |
+| `.data/finn-cli/` | CLI commands, libraries, and migrations           |
 
 ---
 
