@@ -5,7 +5,7 @@
 #   █▄▄  █  █ ▀█ ██▄    █▄▀ █▄█  █  ▄█
 #
 #   Installation Script
-#   https://github.com/caioax/lyne-dots
+#   https://github.com/Finndvz/finn-dots
 #
 # =============================================================================
 
@@ -525,7 +525,7 @@ show_banner() {
     ║   █   █▄█ █▄ █ █▀▀ ▄▄ █▀▄ █▀█ ▀█▀ █▀                          ║
     ║   █▄▄  █  █ ▀█ ██▄    █▄▀ █▄█  █  ▄█                          ║
     ║                                                               ║
-    ║   https://github.com/caioax/lyne-dots                         ║
+    ║   https://github.com/Finndvz/finn-dots                        ║
     ║   Installation Script                                         ║
     ║                                                               ║
     ╚═══════════════════════════════════════════════════════════════╝

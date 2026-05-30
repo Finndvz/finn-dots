@@ -267,7 +267,11 @@ Singleton {
 
     Process {
         id: updateRam
-        command: ["bash", "-c", "free -b | awk '/Mem:/{print $2,$3}'"]
+        // Use MemTotal and MemAvailable from /proc/meminfo.
+        // "used" = MemTotal - MemAvailable, which correctly excludes
+        // reclaimable kernel cache/buffers — the same value htop shows.
+        // `free -b $3` was wrong: it includes cache and inflates usage.
+        command: ["bash", "-c", "awk '/MemTotal/{t=$2} /MemAvailable/{a=$2} END{print t*1024, (t-a)*1024}' /proc/meminfo"]
         stdout: SplitParser {
             onRead: data => {
                 const parts = data.trim().split(/\s+/);

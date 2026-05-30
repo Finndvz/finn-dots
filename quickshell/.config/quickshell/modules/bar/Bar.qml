@@ -10,6 +10,7 @@ import "../quickSettings/"
 import "../notifications/"
 import "../systemMonitor/"
 import "../calendar/"
+import "../weather/"
 
 Scope {
     id: root
@@ -85,7 +86,7 @@ Scope {
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: root.gapIn
 
-                    CalendarButton {}
+                    Workspaces {}
                     SystemMonitorButton {}
                     ActiveWindow {}
                 }
@@ -95,8 +96,10 @@ Scope {
                     anchors.centerIn: parent
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: root.gapIn
+			
+					WeatherButton {}
+                    CalendarButton {}
 
-                    Workspaces {}
                 }
 
                 // --- RIGHT ---
