@@ -49,14 +49,14 @@ get_icon() {
     local code="$1"
     local icon quote
     case "$code" in
-        "01d") icon=""; quote="Sunny"   ;;
-        "01n") icon=""; quote="Clear"   ;;
-        "02d"|"02n"|"03d"|"03n"|"04d"|"04n") icon=""; quote="Cloudy"  ;;
+        "01d") icon="󰖙"; quote="Sunny"   ;;
+        "01n") icon="󰖔"; quote="Clear"   ;;
+        "02d"|"02n"|"03d"|"03n"|"04d"|"04n") icon="󰖐"; quote="Cloudy"  ;;
         "09d"|"09n"|"10d"|"10n")             icon="󰖗"; quote="Rainy"   ;;
-        "11d"|"11n")                         icon=""; quote="Storm"   ;;
-        "13d"|"13n")                         icon=""; quote="Snow"    ;;
+        "11d"|"11n")                         icon="󰙾"; quote="Storm"   ;;
+        "13d"|"13n")                         icon="󰼶"; quote="Snow"    ;;
         "50d"|"50n")                         icon="󰖑"; quote="Mist"    ;;
-        *)                                   icon=""; quote="Unknown" ;;
+        *)                                   icon="󰖔"; quote="Unknown" ;;
     esac
     echo "${icon}|${quote}"
 }
@@ -99,14 +99,14 @@ write_dummy_data() {
             \"wind\": \"0\",
             \"humidity\": \"0\",
             \"pop\": \"0\",
-            \"icon\": \"\",
+            \"icon\": \"󰖔\",
             \"hex\": \"#cdd6f4\",
             \"desc\": \"No API Key\",
-            \"hourly\": [{\"time\": \"00:00\", \"temp\": \"0.0\", \"icon\": \"\", \"hex\": \"#cdd6f4\"}]
+            \"hourly\": [{\"time\": \"00:00\", \"temp\": \"0.0\", \"icon\": \"󰖔\", \"hex\": \"#cdd6f4\"}]
         },"
     done
     final_json="${final_json%,}]"
-    echo "{ \"current_temp\": \"0.0\", \"current_icon\": \"\", \"current_hex\": \"#cdd6f4\", \"forecast\": ${final_json} }" > "${json_file}"
+    echo "{ \"current_temp\": \"0.0\", \"current_icon\": \"󰖔\", \"current_hex\": \"#cdd6f4\", \"forecast\": ${final_json} }" > "${json_file}"
 }
 
 # =============================================================================
@@ -125,6 +125,10 @@ get_data() {
     raw_weather=$(curl -sf --max-time 15 "${base}/weather?APPID=${KEY}&id=${ID}&units=${UNIT}")
     raw_api=$(curl -sf --max-time 15 "${base}/forecast?APPID=${KEY}&id=${ID}&units=${UNIT}")
     api_cod=$(echo "$raw_api" | jq -r '.cod' 2>/dev/null)
+
+    if [[ "$api_cod" == "200" ]]; then
+        raw_api=$(echo "$raw_api" | jq '.city.timezone as $tz | .list |= map(.local_date = ((.dt + $tz) | todateiso8601)[0:10])')
+    fi
 
     if [[ -z "$raw_api" || -z "$raw_weather" || "$api_cod" != "200" ]]; then
         echo "[weather.sh] API error (cod=${api_cod}) — keeping existing cache" >&2
@@ -147,17 +151,17 @@ get_data() {
     # Cache rollover
     if [ -f "$next_day_cache_file" ]; then
         local precache_date
-        precache_date=$(jq -r '.[0].dt_txt' "$next_day_cache_file" 2>/dev/null | cut -d' ' -f1)
+        precache_date=$(jq -r '.[0].local_date // (.[0].dt_txt | split(" ")[0])' "$next_day_cache_file" 2>/dev/null)
         [[ "$precache_date" == "$current_date" ]] && mv "$next_day_cache_file" "$daily_cache_file"
     fi
 
     # Merge today slots
     local api_today_items merged_today
-    api_today_items=$(echo "$raw_api" | jq -c "[.list[] | select(.dt_txt | startswith(\"$current_date\"))]")
+    api_today_items=$(echo "$raw_api" | jq -c "[.list[] | select(.local_date == \"$current_date\")]")
 
     if [ -f "$daily_cache_file" ]; then
         local cached_date
-        cached_date=$(jq -r '.[0].dt_txt' "$daily_cache_file" 2>/dev/null | cut -d' ' -f1)
+        cached_date=$(jq -r '.[0].local_date // (.[0].dt_txt | split(" ")[0])' "$daily_cache_file" 2>/dev/null)
         if [[ "$cached_date" == "$current_date" ]]; then
             merged_today=$(echo "$api_today_items" | \
                 jq --slurpfile cache "$daily_cache_file" \
@@ -170,23 +174,23 @@ get_data() {
     fi
 
     echo "$merged_today" > "$daily_cache_file"
-    echo "$raw_api" | jq -c "[.list[] | select(.dt_txt | startswith(\"$tomorrow_date\"))]" > "$next_day_cache_file"
+    echo "$raw_api" | jq -c "[.list[] | select(.local_date == \"$tomorrow_date\")]" > "$next_day_cache_file"
 
     # Build 5-day forecast
     local processed_forecast
     processed_forecast=$(echo "$raw_api" | \
         jq --argjson today "$merged_today" --arg date "$current_date" \
-        '.list = ($today + [.list[] | select(.dt_txt | startswith($date) | not)])')
+        '.list = ($today + [.list[] | select(.local_date != $date)])')
 
     local dates
-    dates=$(echo "$processed_forecast" | jq -r '.list[].dt_txt | split(" ")[0]' | sort -u | head -n 5)
+    dates=$(echo "$processed_forecast" | jq -r '.list[].local_date' | sort -u | head -n 5)
 
     local final_json="["
     local counter=0
 
     for d in $dates; do
         local day_data
-        day_data=$(echo "$processed_forecast" | jq "[.list[] | select(.dt_txt | startswith(\"$d\"))]")
+        day_data=$(echo "$processed_forecast" | jq "[.list[] | select(.local_date == \"$d\")]")
 
         local f_max f_min f_feels f_pop f_pop_pct f_wind f_hum f_code f_desc f_icon f_hex
         f_max=$(printf "%.1f"   "$(echo "$day_data" | jq '[.[].main.temp_max] | max')")

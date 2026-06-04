@@ -81,7 +81,6 @@ all-update() {
     echo -e "\e[1;32m:: All updates complete!\e[0m"
 }
 
-export PATH=$PATH:/home/caio/.spicetify
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

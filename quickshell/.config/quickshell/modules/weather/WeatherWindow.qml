@@ -16,9 +16,9 @@ QsPopupWindow {
 
     // Cor do ícone baseada na condição
     function conditionColor(icon: string): color {
-        if (icon === "" || icon === "󰖗" || icon === "") return Config.accentColor;
-        if (icon === "" || icon === "󰼶")                  return Qt.rgba(0.53, 0.81, 0.98, 1);
-        if (icon === "" || icon === "󰙾")                  return Config.warningColor;
+        if (icon === "󰖐" || icon === "󰖗" || icon === "󰖑") return Config.accentColor;
+        if (icon === "󰖙" || icon === "󰼶")                  return Qt.rgba(0.53, 0.81, 0.98, 1);
+        if (icon === "󰖔" || icon === "󰙾")                  return Config.warningColor;
         return Qt.color(WeatherService.currentHex);
     }
 
