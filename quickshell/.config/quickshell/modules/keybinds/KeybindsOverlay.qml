@@ -150,11 +150,11 @@ PanelWindow {
                         icon: "󰀻"
                         keybinds: [
                             {
-                                keys: "Super + Return",
+                                keys: "Super + T",
                                 action: "Terminal"
                             },
                             {
-                                keys: "Super + D",
+                                keys: "Super + E",
                                 action: "File Manager"
                             },
                             {
@@ -185,12 +185,8 @@ PanelWindow {
                                 action: "Fullscreen (pinned)"
                             },
                             {
-                                keys: "Super + Shift + Space",
+                                keys: "Super + V",
                                 action: "Toggle floating"
-                            },
-                            {
-                                keys: "Super + Tab",
-                                action: "Toggle split"
                             },
                             {
                                 keys: "Super + P",
@@ -255,7 +251,7 @@ PanelWindow {
                                 action: "Wallpaper Picker"
                             },
                             {
-                                keys: "Super + V",
+                                keys: "Super + C",
                                 action: "Clipboard History"
                             },
                             {
@@ -263,11 +259,11 @@ PanelWindow {
                                 action: "Keybinds (this window)"
                             },
                             {
-                                keys: "Super + End",
+                                keys: "Super + Delete",
                                 action: "Power Menu"
                             },
                             {
-                                keys: "Print",
+                                keys: "Insert",
                                 action: "Screenshot"
                             },
                             {
