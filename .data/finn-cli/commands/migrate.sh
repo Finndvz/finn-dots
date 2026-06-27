@@ -1,15 +1,24 @@
-# lyne migrate - Manage migration scripts
+# finn migrate - Manage migration scripts
 
-local MIGRATIONS_DIR="$DOTS_DIR/.data/lyne-cli/migrations"
-local DONE_FILE="$HOME/.local/share/lyne/migrations-done"
+local MIGRATIONS_DIR="$DOTS_DIR/.data/finn-cli/migrations"
+local DONE_FILE="$HOME/.local/share/finn/migrations-done"
+local LEGACY_DONE_FILE="$HOME/.local/share/lyne/migrations-done"
 local subcmd="${1:-}"
 
 mkdir -p "$(dirname "$DONE_FILE")"
 touch "$DONE_FILE"
 
+if [[ -f "$LEGACY_DONE_FILE" ]]; then
+    while IFS= read -r name; do
+        [[ -n "$name" ]] || continue
+        [[ "$name" == "004-install-lyne-cli-to-path.sh" ]] && name="004-install-finn-cli-to-path.sh"
+        grep -qxF "$name" "$DONE_FILE" 2>/dev/null || echo "$name" >> "$DONE_FILE"
+    done < "$LEGACY_DONE_FILE"
+fi
+
 case "$subcmd" in
     -h|--help)
-        echo "Usage: lyne migrate [subcommand]"
+        echo "Usage: finn migrate [subcommand]"
         echo ""
         echo "Manage dotfiles migration scripts."
         echo ""
@@ -35,7 +44,7 @@ case "$subcmd" in
         done
 
         if [[ $total -eq 0 ]]; then
-            echo "lyne migrate: no migrations found"
+            echo "finn migrate: no migrations found"
         else
             echo ""
             echo "  $total total, $pending pending"
@@ -53,17 +62,17 @@ case "$subcmd" in
         done
 
         if [[ $count -eq 0 ]]; then
-            echo "lyne migrate: all migrations already marked as done"
+            echo "finn migrate: all migrations already marked as done"
         else
-            echo "lyne migrate: marked $count migrations as done"
+            echo "finn migrate: marked $count migrations as done"
         fi
         ;;
     "")
         echo ":: Running pending migrations..."
-        source "$DOTS_DIR/.data/lyne-cli/lib/run-migrations.sh"
+        source "$DOTS_DIR/.data/finn-cli/lib/run-migrations.sh"
         ;;
     *)
-        echo "lyne migrate: unknown subcommand '$subcmd'"
-        echo "Run 'lyne migrate --help' for usage information."
+        echo "finn migrate: unknown subcommand '$subcmd'"
+        echo "Run 'finn migrate --help' for usage information."
         ;;
 esac

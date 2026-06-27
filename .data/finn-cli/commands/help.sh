@@ -1,8 +1,8 @@
-# lyne help - Show available commands
+# finn help - Show available commands
 
-echo "lyne - Dotfiles management CLI"
+echo "finn - Dotfiles management CLI"
 echo ""
-echo "Usage: lyne <command> [args...]"
+echo "Usage: finn <command> [args...]"
 echo ""
 echo "Commands:"
 echo "  state       Manage state.json"
@@ -13,4 +13,4 @@ echo "  git         Run git commands in the dotfiles repo"
 echo "  reload      Reload QuickShell"
 echo "  help        Show this help message"
 echo ""
-echo "Run 'lyne <command> --help' for more information on a command."
+echo "Run 'finn <command> --help' for more information on a command."

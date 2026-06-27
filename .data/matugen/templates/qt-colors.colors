@@ -103,8 +103,8 @@ ForegroundPositive={{colors.tertiary.default.red}},{{colors.tertiary.default.gre
 ForegroundVisited={{colors.tertiary_container.default.red}},{{colors.tertiary_container.default.green}},{{colors.tertiary_container.default.blue}}
 
 [General]
-ColorScheme=Lyne
-Name=Lyne
+ColorScheme=Finn
+Name=Finn
 
 [WM]
 activeBackground={{colors.surface_container.default.red}},{{colors.surface_container.default.green}},{{colors.surface_container.default.blue}}

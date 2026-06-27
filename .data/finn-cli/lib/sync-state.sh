@@ -10,14 +10,14 @@ local STATE_FILE="$DOTS_DIR/quickshell/.config/quickshell/state.json"
 local DEFAULTS_FILE="$DOTS_DIR/.data/quickshell/defaults.json"
 
 if [[ ! -f "$DEFAULTS_FILE" ]]; then
-    echo "lyne sync: defaults.json not found at $DEFAULTS_FILE"
+    echo "finn sync: defaults.json not found at $DEFAULTS_FILE"
     return 1
 fi
 
 # If state.json doesn't exist, just copy defaults
 if [[ ! -f "$STATE_FILE" ]]; then
     cp "$DEFAULTS_FILE" "$STATE_FILE"
-    echo "lyne sync: created state.json from defaults"
+    echo "finn sync: created state.json from defaults"
     return 0
 fi
 
@@ -34,9 +34,9 @@ MERGED=$(jq -s '
 ' "$DEFAULTS_FILE" "$STATE_FILE")
 
 if [[ $? -ne 0 ]]; then
-    echo "lyne sync: failed to merge state.json (jq error)"
+    echo "finn sync: failed to merge state.json (jq error)"
     return 1
 fi
 
 echo "$MERGED" > "$STATE_FILE"
-echo "lyne sync: state.json synced with defaults"
+echo "finn sync: state.json synced with defaults"

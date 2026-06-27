@@ -32,6 +32,6 @@ gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark" 2>/dev/null 
 cd "$DOTS_DIR" && stow -R theming
 
 # Sync state.json to pick up new theme.mode default
-source "$DOTS_DIR/.data/lyne-cli/lib/sync-state.sh"
+source "$DOTS_DIR/.data/finn-cli/lib/sync-state.sh"
 
 echo "   Matugen + GTK/Qt dynamic theming configured"

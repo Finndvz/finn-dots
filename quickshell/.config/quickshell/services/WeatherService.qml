@@ -111,6 +111,12 @@ Singleton {
         return "°C";
     }
 
+    function _safeFloat(val) {
+        if (val === undefined || val === null || val === "") return NaN;
+        var s = String(val).replace(",", ".");
+        return Number(s);
+    }
+
     function _parse(raw) {
         var json;
         try { json = JSON.parse(raw); }
@@ -121,7 +127,7 @@ Singleton {
         }
 
         var sym = _unitSym();
-        var cTemp = parseFloat(json.current_temp || "0");
+        var cTemp = _safeFloat(json.current_temp);
         internal.currentTemp    = isNaN(cTemp) ? 0 : cTemp;
         internal.currentTempStr = (isNaN(cTemp) ? "—" : Math.round(cTemp)) + sym;
         internal.currentIcon    = json.current_icon || "";
@@ -152,7 +158,7 @@ Singleton {
                     "dt":      h.dt      || 0,
                     "time":    h.time    || "—",
                     "temp":    h.temp    || "—",
-                    "tempStr": (h.temp ? Math.round(parseFloat(h.temp)) : "—") + sym,
+                    "tempStr": (h.temp ? Math.round(_safeFloat(h.temp)) : "—") + sym,
                     "icon":    h.icon    || "",
                     "hex":     h.hex     || "#cdd6f4"
                 });
@@ -171,10 +177,10 @@ Singleton {
                 "icon":        day.icon     || "",
                 "hex":         day.hex      || "#cdd6f4",
                 "desc":        day.desc     || "—",
-                "maxStr":      (day.max        ? Math.round(parseFloat(day.max))        : "—") + sym,
-                "minStr":      (day.min        ? Math.round(parseFloat(day.min))        : "—") + sym,
-                "feelsLikeStr":(day.feels_like ? Math.round(parseFloat(day.feels_like)) : "—") + sym,
-                "windStr":     (day.wind ? Math.round(parseFloat(day.wind) * 3.6) : "0") + " km/h",
+                "maxStr":      (day.max        ? Math.round(_safeFloat(day.max))        : "—") + sym,
+                "minStr":      (day.min        ? Math.round(_safeFloat(day.min))        : "—") + sym,
+                "feelsLikeStr":(day.feels_like ? Math.round(_safeFloat(day.feels_like)) : "—") + sym,
+                "windStr":     (day.wind ? Math.round(_safeFloat(day.wind) * 3.6) : "0") + " km/h",
                 "popStr":      (day.pop     || "0") + "%",
                 "hourly":      hourly
             });
@@ -210,8 +216,8 @@ Singleton {
             var slotB = raw3h[k + 1];
             var dtA   = parseInt(slotA.dt);
             var dtB   = parseInt(slotB.dt);
-            var tA    = parseFloat(slotA.temp);
-            var tB    = parseFloat(slotB.temp);
+            var tA    = _safeFloat(slotA.temp);
+            var tB    = _safeFloat(slotB.temp);
             var span  = dtB - dtA; // usually 10800s (3h)
 
             for (var offset = 0; offset < span; offset += 3600) {

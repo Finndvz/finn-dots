@@ -1,4 +1,4 @@
-# lyne theme - Manage theme settings
+# finn theme - Manage theme settings
 
 local STATE_FILE="$DOTS_DIR/quickshell/.config/quickshell/state.json"
 local THEMES_DIR="$HOME/.local/themes"
@@ -25,7 +25,7 @@ _theme_set_state() {
 
 case "$subcmd" in
     -h|--help)
-        echo "Usage: lyne theme [subcommand]"
+        echo "Usage: finn theme [subcommand]"
         echo ""
         echo "Manage the theme mode and active preset."
         echo ""
@@ -55,13 +55,13 @@ case "$subcmd" in
     set)
         local theme_name="${2:-}"
         if [[ -z "$theme_name" ]]; then
-            echo "Usage: lyne theme set <name>"
-            echo "Run 'lyne theme list' to see available themes."
+            echo "Usage: finn theme set <name>"
+            echo "Run 'finn theme list' to see available themes."
             return 1
         fi
         if [[ ! -f "$THEMES_DIR/$theme_name.json" ]]; then
-            echo "lyne theme: unknown theme '$theme_name'"
-            echo "Run 'lyne theme list' to see available themes."
+            echo "finn theme: unknown theme '$theme_name'"
+            echo "Run 'finn theme list' to see available themes."
             return 1
         fi
         _theme_set_state "theme.mode" "preset"
@@ -100,7 +100,7 @@ case "$subcmd" in
 
             echo "Color scheme set to: $scheme_arg"
         else
-            echo "lyne theme scheme: must be 'dark' or 'light'"
+            echo "finn theme scheme: must be 'dark' or 'light'"
             return 1
         fi
         ;;
@@ -118,7 +118,7 @@ case "$subcmd" in
         fi
         ;;
     *)
-        echo "lyne theme: unknown subcommand '$subcmd'"
-        echo "Run 'lyne theme --help' for usage information."
+        echo "finn theme: unknown subcommand '$subcmd'"
+        echo "Run 'finn theme --help' for usage information."
         ;;
 esac

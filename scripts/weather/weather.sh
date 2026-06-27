@@ -144,6 +144,12 @@ get_data() {
     c_icon=$(get_icon "$c_code" | cut -d'|' -f1)
     c_hex=$(get_hex "$c_code")
 
+    local c_feels c_hum c_wind c_desc
+    c_feels=$(printf "%.1f" "$(echo "$raw_weather" | jq -r '.main.feels_like')")
+    c_hum=$(echo "$raw_weather" | jq -r '.main.humidity')
+    c_wind=$(echo "$raw_weather" | jq -r '.wind.speed' | awk '{print int($1+0.5)}')
+    c_desc=$(echo "$raw_weather" | jq -r '.weather[0].description' | sed -e "s/\b\(.\)/\u\1/g")
+
     local current_date tomorrow_date
     current_date=$(date +%Y-%m-%d)
     tomorrow_date=$(date -d "tomorrow" +%Y-%m-%d)
@@ -209,6 +215,15 @@ get_data() {
         f_day=$(date -d "$d" "+%a")
         f_full_day=$(date -d "$d" "+%A")
         f_date_num=$(date -d "$d" "+%d %b")
+
+        if [[ "$d" == "$current_date" ]]; then
+            f_feels="$c_feels"
+            f_hum="$c_hum"
+            f_wind="$c_wind"
+            f_desc="$c_desc"
+            f_icon="$c_icon"
+            f_hex="$c_hex"
+        fi
 
         # Hourly slots
         local hourly_json="["
