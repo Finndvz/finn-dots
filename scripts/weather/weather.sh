@@ -216,7 +216,7 @@ get_data() {
         f_full_day=$(date -d "$d" "+%A")
         f_date_num=$(date -d "$d" "+%d %b")
 
-        if [[ "$d" == "$current_date" ]]; then
+        if [[ $counter -eq 0 ]]; then
             f_feels="$c_feels"
             f_hum="$c_hum"
             f_wind="$c_wind"

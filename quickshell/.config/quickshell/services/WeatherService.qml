@@ -11,7 +11,7 @@ Singleton {
 
     readonly property string scriptPath: StateService.get(
         "weather.scriptPath",
-        "/home/finn/.lyne-dots/scripts/weather/weather.sh"
+        "/home/finn/.finn-dots/scripts/weather/weather.sh"
     )
     readonly property int    pollMs: 60000
     readonly property string units:  StateService.get("weather.units", "metric")
